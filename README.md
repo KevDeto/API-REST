@@ -35,3 +35,19 @@ El proyecto utiliza una estructura de paquetes clara y organizada:
 + **Java 17** o superior.
 + **Maven** como gestor de dependencias.
 + **MySQL** como motor de base de datos.
+
+**¿Cómo ejecutar el proyecto?**
+
+- clonar el repositorio:
+
+  `git clone <URL_DEL_REPOSITORIO>`
+
+- Configurar las credenciales de la base de datos en el archivo application.properties.
+
+- ejecutar el proyecto utilizando
+
+  `mvn spring-boot:run`
+
+- Acceder a Swagger para probar la API:
+
+  http://localhost:8080/swagger-ui.html
