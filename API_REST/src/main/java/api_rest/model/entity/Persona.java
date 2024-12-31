@@ -23,8 +23,8 @@ public class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "uuid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "uuid")
 	private Integer UUID;
 
 	@Column(name = "nombre")

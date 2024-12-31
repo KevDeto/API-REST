@@ -53,13 +53,6 @@ public class EmpleadoController {
         Empleado empleadoSave = null;
         try {
         	empleadoSave = empleadoService.save(empleadoDto);
-            /* clienteDto = ClienteDto.builder()
-                    .idCliente(clienteDto.getIdCliente())
-                    .nombre(clienteDto.getNombre())
-                    .apellido(clienteDto.getApellido())
-                    .correo(clienteDto.getCorreo())
-                    .fechaRegistro(clienteDto.getFechaRegistro())
-                    .build();*/
             return new ResponseEntity<>(MensajeResponse
                     .builder()
                     .mensaje("Guardado correctamente")
@@ -77,28 +70,23 @@ public class EmpleadoController {
 
     @PutMapping("empleado/{id}")
     public ResponseEntity<?> update(@RequestBody EmpleadoDto empleadoDto, @PathVariable Integer id) {
-        Empleado clienteUpdate = null;
+        Empleado empleadoUpdate = null;
         try {
         	Empleado findCliente = empleadoService.findById(id);
             if (empleadoService.existsById(id)) {
             	empleadoDto.setUUID(id);
-                clienteUpdate = empleadoService.save(empleadoDto);
-                /* clienteDto = ClienteDto.builder()
-                        .idCliente(clienteUpdate.getIdCliente())
-                        .nombre(clienteUpdate.getNombre())
-                        .apellido(clienteUpdate.getApellido())
-                        .correo(clienteUpdate.getCorreo())
-                        .fechaRegistro(clienteUpdate.getFechaRegistro())
-                        .build();*/
+            	empleadoUpdate = empleadoService.save(empleadoDto);
                 return new ResponseEntity<>(MensajeResponse
                         .builder()
                         .mensaje("Guardado correctamente")
-                        .objeto(ClienteDto.builder()
-                                .UUID(clienteUpdate.getUUID())
-                                .nombre(clienteUpdate.getNombre())
-                                .apellido(clienteUpdate.getApellido())
-                                .correo(clienteUpdate.getCorreo())
-                                .fechaRegistro(clienteUpdate.getFechaRegistro())
+                        .objeto(EmpleadoDto.builder()
+                                .UUID(empleadoUpdate.getUUID())
+                                .nombre(empleadoUpdate.getNombre())
+                                .apellido(empleadoUpdate.getApellido())
+                                .correo(empleadoUpdate.getCorreo())
+                                .fechaRegistro(empleadoUpdate.getFechaRegistro())
+                                .cargo(empleadoUpdate.getCargo())
+                                .sueldo(empleadoUpdate.getSueldo())
                                 .build())
                         .build(),
                         HttpStatus.CREATED);
@@ -120,16 +108,12 @@ public class EmpleadoController {
     }
 
     @DeleteMapping("empleado/{id}")
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> delete(@PathVariable Integer id) {
-        //Map<String, Object> response = new HashMap<>();
         try {
             Empleado empleadoDelete = empleadoService.findById(id);
             empleadoService.delete(empleadoDelete);
             return new ResponseEntity<>(empleadoDelete, HttpStatus.NO_CONTENT);
         } catch (DataAccessException exDt) {
-//            response.put("mensaje", exDt.getMessage());
-//            response.put("cliente", null);
             return new ResponseEntity<>(MensajeResponse.builder()
                     .mensaje(exDt.getMessage())
                     .objeto(null)

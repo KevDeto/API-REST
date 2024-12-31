@@ -51,13 +51,6 @@ public class ClienteController {
         Cliente clienteSave = null;
         try {
             clienteSave = clienteService.save(clienteDto);
-            /* clienteDto = ClienteDto.builder()
-                    .idCliente(clienteDto.getIdCliente())
-                    .nombre(clienteDto.getNombre())
-                    .apellido(clienteDto.getApellido())
-                    .correo(clienteDto.getCorreo())
-                    .fechaRegistro(clienteDto.getFechaRegistro())
-                    .build();*/
             return new ResponseEntity<>(MensajeResponse
                     .builder()
                     .mensaje("Guardado correctamente")
@@ -81,13 +74,6 @@ public class ClienteController {
             if (clienteService.existsById(id)) {
                 clienteDto.setUUID(id);
                 clienteUpdate = clienteService.save(clienteDto);
-                /* clienteDto = ClienteDto.builder()
-                        .idCliente(clienteUpdate.getIdCliente())
-                        .nombre(clienteUpdate.getNombre())
-                        .apellido(clienteUpdate.getApellido())
-                        .correo(clienteUpdate.getCorreo())
-                        .fechaRegistro(clienteUpdate.getFechaRegistro())
-                        .build();*/
                 return new ResponseEntity<>(MensajeResponse
                         .builder()
                         .mensaje("Guardado correctamente")
@@ -118,16 +104,12 @@ public class ClienteController {
     }
 
     @DeleteMapping("cliente/{id}")
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> delete(@PathVariable Integer id) {
-        //Map<String, Object> response = new HashMap<>();
         try {
             Cliente clienteDelete = clienteService.findById(id);
             clienteService.delete(clienteDelete);
             return new ResponseEntity<>(clienteDelete, HttpStatus.NO_CONTENT);
         } catch (DataAccessException exDt) {
-//            response.put("mensaje", exDt.getMessage());
-//            response.put("cliente", null);
             return new ResponseEntity<>(MensajeResponse.builder()
                     .mensaje(exDt.getMessage())
                     .objeto(null)

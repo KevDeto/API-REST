@@ -1,5 +1,7 @@
 package api_rest.service.impl;
 
+import java.util.List;
+
 import api_rest.model.dao.IClienteDao;
 import api_rest.model.dto.ClienteDto;
 import api_rest.model.entity.Cliente;
@@ -8,8 +10,6 @@ import api_rest.service.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ClienteImpl implements IClienteService {
