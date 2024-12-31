@@ -3,10 +3,12 @@ package api_rest.service.impl;
 import api_rest.model.dao.IClienteDao;
 import api_rest.model.dto.ClienteDto;
 import api_rest.model.entity.Cliente;
+import api_rest.service.IClienteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import api_rest.service.IClienteService;
+
 import java.util.List;
 
 @Service
@@ -19,7 +21,7 @@ public class ClienteImpl implements IClienteService {
     @Override
     public Cliente save(ClienteDto clienteDto) {
         Cliente cliente = Cliente.builder()
-                .idCliente(clienteDto.getIdCliente())
+                .UUID(clienteDto.getUUID())
                 .nombre(clienteDto.getNombre())
                 .apellido(clienteDto.getApellido())
                 .correo(clienteDto.getCorreo())
@@ -47,7 +49,7 @@ public class ClienteImpl implements IClienteService {
 
     @Override
     public List<Cliente> listAll() {
-        return (List)clienteDao.findAll();
+        return clienteDao.findAll();
     }
 
 }

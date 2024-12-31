@@ -1,10 +1,7 @@
 package api_rest.controller;
 
-import api_rest.model.dto.ClienteDto;
-import api_rest.model.entity.Cliente;
-import api_rest.model.payload.MensajeResponse;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -17,21 +14,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import api_rest.model.dto.ClienteDto;
+import api_rest.model.dto.EmpleadoDto;
+import api_rest.model.entity.Cliente;
+import api_rest.model.entity.Empleado;
+import api_rest.model.payload.MensajeResponse;
 import api_rest.service.IClienteService;
-import java.util.List;
+import api_rest.service.IEmpleadoService;
 
 @RestController
 @RequestMapping("/api/v1")
-public class ClienteController {
+public class EmpleadoController {
 
     @Autowired
-    private IClienteService clienteService;
+    private IEmpleadoService empleadoService;
 
-    @GetMapping("clientes")
+    @GetMapping("empleados")
     public ResponseEntity<?> showAll() {
-        List<Cliente> getList = clienteService.listAll();
+        List<Empleado> getList = empleadoService.listAll();
         if (getList == null) {
             return new ResponseEntity<>(MensajeResponse.builder()
                     .mensaje("No hay registros")
@@ -46,11 +48,11 @@ public class ClienteController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("cliente")
-    public ResponseEntity<?> create(@RequestBody ClienteDto clienteDto) {
-        Cliente clienteSave = null;
+    @PostMapping("empleado")
+    public ResponseEntity<?> create(@RequestBody EmpleadoDto empleadoDto) {
+        Empleado empleadoSave = null;
         try {
-            clienteSave = clienteService.save(clienteDto);
+        	empleadoSave = empleadoService.save(empleadoDto);
             /* clienteDto = ClienteDto.builder()
                     .idCliente(clienteDto.getIdCliente())
                     .nombre(clienteDto.getNombre())
@@ -61,7 +63,7 @@ public class ClienteController {
             return new ResponseEntity<>(MensajeResponse
                     .builder()
                     .mensaje("Guardado correctamente")
-                    .objeto(clienteDto)
+                    .objeto(empleadoDto)
                     .build(),
                     HttpStatus.CREATED);
         } catch (DataAccessException exDt) {
@@ -73,14 +75,14 @@ public class ClienteController {
         }
     }
 
-    @PutMapping("cliente/{id}")
-    public ResponseEntity<?> update(@RequestBody ClienteDto clienteDto, @PathVariable Integer id) {
-        Cliente clienteUpdate = null;
+    @PutMapping("empleado/{id}")
+    public ResponseEntity<?> update(@RequestBody EmpleadoDto empleadoDto, @PathVariable Integer id) {
+        Empleado clienteUpdate = null;
         try {
-            Cliente findCliente = clienteService.findById(id);
-            if (clienteService.existsById(id)) {
-                clienteDto.setUUID(id);
-                clienteUpdate = clienteService.save(clienteDto);
+        	Empleado findCliente = empleadoService.findById(id);
+            if (empleadoService.existsById(id)) {
+            	empleadoDto.setUUID(id);
+                clienteUpdate = empleadoService.save(empleadoDto);
                 /* clienteDto = ClienteDto.builder()
                         .idCliente(clienteUpdate.getIdCliente())
                         .nombre(clienteUpdate.getNombre())
@@ -117,14 +119,14 @@ public class ClienteController {
         }
     }
 
-    @DeleteMapping("cliente/{id}")
+    @DeleteMapping("empleado/{id}")
     //@ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         //Map<String, Object> response = new HashMap<>();
         try {
-            Cliente clienteDelete = clienteService.findById(id);
-            clienteService.delete(clienteDelete);
-            return new ResponseEntity<>(clienteDelete, HttpStatus.NO_CONTENT);
+            Empleado empleadoDelete = empleadoService.findById(id);
+            empleadoService.delete(empleadoDelete);
+            return new ResponseEntity<>(empleadoDelete, HttpStatus.NO_CONTENT);
         } catch (DataAccessException exDt) {
 //            response.put("mensaje", exDt.getMessage());
 //            response.put("cliente", null);
@@ -136,10 +138,10 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("cliente/{id}")
+    @GetMapping("empleado/{id}")
     public ResponseEntity<?> showById(@PathVariable Integer id) {
-        Cliente cliente = clienteService.findById(id);
-        if (cliente == null) {
+        Empleado empleado = empleadoService.findById(id);
+        if (empleado == null) {
             return new ResponseEntity<>(MensajeResponse.builder()
                     .mensaje("El registro que intenta buscar no existe")
                     .objeto(null)
@@ -148,12 +150,14 @@ public class ClienteController {
         }
         return new ResponseEntity<>(MensajeResponse.builder()
                 .mensaje("")
-                .objeto(ClienteDto.builder()
-                        .UUID(cliente.getUUID())
-                        .nombre(cliente.getNombre())
-                        .apellido(cliente.getApellido())
-                        .correo(cliente.getCorreo())
-                        .fechaRegistro(cliente.getFechaRegistro())
+                .objeto(EmpleadoDto.builder()
+                        .UUID(empleado.getUUID())
+                        .nombre(empleado.getNombre())
+                        .apellido(empleado.getApellido())
+                        .correo(empleado.getCorreo())
+                        .fechaRegistro(empleado.getFechaRegistro())
+                        .cargo(empleado.getCargo())
+                        .sueldo(empleado.getSueldo())
                         .build())
                 .build(),
                 HttpStatus.OK);
