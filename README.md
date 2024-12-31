@@ -1,6 +1,6 @@
 **API REST de Clientes - Java + Spring Boot**
 
-Este proyecto implementa una API REST enfocada exclusivamente en la gestión de clientes. Fue desarrollado utilizando Spring Boot y sigue una arquitectura limpia y modular basada en paquetes.
+Este proyecto implementa una API REST enfocada exclusivamente en la gestión de clientes y empleados mediante herencia. Fue desarrollado utilizando Spring Boot y sigue una arquitectura limpia y modular basada en paquetes.
 
 **Tecnologías utilizadas**:
 
@@ -26,7 +26,7 @@ El proyecto utiliza una estructura de paquetes clara y organizada:
 
 **Características principales**:
 
-+ CRUD de clientes con validaciones en los datos.
++ CRUD de clientes y empleados con validaciones en los datos.
 + Persistencia en base de datos MySQL.
 + Documentación de los endpoints generada automáticamente con Swagger.
 + Diseño modular que facilita la extensibilidad y el mantenimiento.
@@ -50,4 +50,4 @@ El proyecto utiliza una estructura de paquetes clara y organizada:
 
 - Acceder a Swagger para probar la API:
 
-  http://localhost:8080/swagger-ui.html
+  http://localhost:8092/swagger-ui.html
