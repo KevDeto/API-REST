@@ -72,7 +72,6 @@ public class EmpleadoController {
     public ResponseEntity<?> update(@RequestBody EmpleadoDto empleadoDto, @PathVariable Integer id) {
         Empleado empleadoUpdate = null;
         try {
-        	Empleado findCliente = empleadoService.findById(id);
             if (empleadoService.existsById(id)) {
             	empleadoDto.setUUID(id);
             	empleadoUpdate = empleadoService.save(empleadoDto);

@@ -70,7 +70,6 @@ public class ClienteController {
     public ResponseEntity<?> update(@RequestBody ClienteDto clienteDto, @PathVariable Integer id) {
         Cliente clienteUpdate = null;
         try {
-            Cliente findCliente = clienteService.findById(id);
             if (clienteService.existsById(id)) {
                 clienteDto.setUUID(id);
                 clienteUpdate = clienteService.save(clienteDto);
